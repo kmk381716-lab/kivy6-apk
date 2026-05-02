@@ -37,10 +37,10 @@ jobs:
           zip \
           unzip
 
-    - name: Upgrade pip and install buildozer
+    - name: Upgrade pip, install buildozer and cython
       run: |
         python3 -m pip install --upgrade pip
-        pip install --upgrade buildozer
+        pip install --upgrade buildozer cython
 
     - name: Run Buildozer
       run: buildozer android debug deploy run
