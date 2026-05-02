@@ -1,0 +1,46 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          python3-pip \
+          openjdk-17-jdk \
+          zlib1g-dev \
+          libssl-dev \
+          libsqlite3-dev \
+          libffi-dev \
+          libncurses6 \
+          libncursesw6 \
+          libtinfo6 \
+          liblzma-dev \
+          zip \
+          unzip
+
+    - name: Upgrade pip and install buildozer
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install buildozer==1.3.2
+
+    - name: Run Buildozer
+      run: buildozer android debug deploy run
